@@ -1,6 +1,6 @@
 #include "sound.h"
 
-const int SOUND_PIN = A1; // Define the pin for the sound sensor
+const int SOUND_PIN = A1; // Define the pin for the sound sensor - pin 2 on the ESP32 board
 const int NUM_SAMPLES = 32; // Number of samples to average
 
 void initSound() {
