@@ -1,6 +1,8 @@
 #pragma once 
 
 #include "processing.h"
+#include <iostream>
+#include <string>
 
 const float LOW_LIGHT_THRESHOLD = 1500.0f; 
 const float LOW_SOUND_THRESHOLD = 0.0f;
@@ -17,6 +19,12 @@ struct ComfortContribution {
     float overallComfortScore;
 };
 
+enum FlaggedSensor {
+    LIGHT, 
+    SOUND, 
+    TEMPERATURE 
+};
+
 enum ComfortLevel {
     GOOD, 
     MODERATE,
@@ -28,4 +36,5 @@ float calculateRawSensoryContribution(float currentValue, float lowThreshold, fl
 float calculateSensoryContribution(float currentValue, float lowThreshold, float highThreshold, Trend trend, bool spikeDetected); 
 float calculateOverallComfortScore(float lightContribution, float soundContribution, float temperatureContribution);
 ComfortLevel sensoryComfortLevel(float individualSensoryContribution);
+const char* recommendation(FlaggedSensor sensor, ComfortLevel level);
 void updateComfortContribution(SensorData light, SensorData sound, SensorData temperature);

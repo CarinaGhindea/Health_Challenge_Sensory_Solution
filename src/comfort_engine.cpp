@@ -54,6 +54,24 @@ ComfortLevel sensoryComfortLevel(float individualSensoryContribution) {
     }
 }
 
+const char* recommendation(FlaggedSensor sensor, ComfortLevel level) {
+    if (sensor == LIGHT && (level == ELEVATED || level == SEVERE)) {
+        return "Reduce environmental brightness";
+    }
+    else if (sensor == SOUND && (level == ELEVATED || level == SEVERE)) {
+        return "Reduce environmental noise level";
+    }
+    else if (sensor == TEMPERATURE && (level == ELEVATED || level == SEVERE)) {
+        return "Adjust environmental temperature";
+    }
+    else if (level == MODERATE) {
+        return "Monitor environmental conditions";
+    }
+    else {
+        return "Environmental conditions are within acceptable limits";
+    }
+}
+
 void updateComfortContribution(SensorData light, SensorData sound, SensorData temperature) {
     comfort.lightContribution = calculateSensoryContribution(light.currentValue, LOW_LIGHT_THRESHOLD, HIGH_LIGHT_THRESHOLD, light.trend, light.spikeDetected);
     comfort.soundContribution = calculateSensoryContribution(sound.currentValue, LOW_SOUND_THRESHOLD, HIGH_SOUND_THRESHOLD, sound.trend, sound.spikeDetected);
