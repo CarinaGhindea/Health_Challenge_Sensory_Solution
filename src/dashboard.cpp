@@ -2,6 +2,7 @@
 
 #include <WiFi.h>
 #include <WebServer.h>
+#include <LittleFS.h>
 
 const char* ssid = "CarinaiPhone";
 const char* password = "u6zr47zj5i0y";
@@ -35,5 +36,13 @@ void updateDashboard() {
 }
 
 void handleRoot() {
-    server.send(200, "text/html", "<html><body><h1>Welcome to the Dashboard</h1></body></html>");
+    File file = LittleFS.open("/dashboard.html");
+    if(!file){
+    Serial.println("Failed to open file for reading");
+    return;
+    }
+    
+    server.streamFile(file, "text/html"); 
+
+    file.close();
 }
