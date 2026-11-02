@@ -42,34 +42,36 @@ float calculateOverallComfortScore(float lightContribution, float soundContribut
     return overallComfortScore;
 }
 
-ComfortLevel sensoryComfortLevel(float individualSensoryContribution) {
-    if (individualSensoryContribution < 5.0f) {
+ComfortLevel sensoryComfortLevel(float contribution) {
+    if (contribution < 5.0f) {
         return GOOD;
-    } else if (individualSensoryContribution < 10.0f) {
+    } else if (contribution < 10.0f) {
         return MODERATE;
-    } else if (individualSensoryContribution < 25.0f) {
+    } else if (contribution < 25.0f) {
         return ELEVATED;
     } else {
         return SEVERE;
     }
 }
 
-const char* recommendation(FlaggedSensor sensor, ComfortLevel level) {
-    if (sensor == LIGHT && (level == ELEVATED || level == SEVERE)) {
-        return "Reduce environmental brightness";
+std::string recommendation(ComfortLevel lightLevel, ComfortLevel soundLevel, ComfortLevel temperatureLevel) {
+    std::string recommendation = "";
+    if ((lightLevel == ELEVATED || lightLevel == SEVERE)) {
+        recommendation += "Adjust environmental brightness\n";
     }
-    else if (sensor == SOUND && (level == ELEVATED || level == SEVERE)) {
-        return "Reduce environmental noise level";
+    if ((soundLevel == ELEVATED || soundLevel == SEVERE)) {
+        recommendation += "Reduce environmental noise level\n";
     }
-    else if (sensor == TEMPERATURE && (level == ELEVATED || level == SEVERE)) {
-        return "Adjust environmental temperature";
+    if ((temperatureLevel == ELEVATED || temperatureLevel == SEVERE)) {
+        recommendation += "Adjust environmental temperature\n";
     }
-    else if (level == MODERATE) {
-        return "Monitor environmental conditions";
+    if (recommendation.empty() && (lightLevel == MODERATE || soundLevel == MODERATE || temperatureLevel == MODERATE)) {
+        recommendation += "Monitor environmental conditions\n";
     }
-    else {
-        return "Environmental conditions are within acceptable limits";
+    if (recommendation.empty()) {
+        recommendation += "Environmental conditions are within acceptable limits\n";
     }
+    return recommendation;
 }
 
 void updateComfortContribution(SensorData light, SensorData sound, SensorData temperature) {
@@ -77,4 +79,10 @@ void updateComfortContribution(SensorData light, SensorData sound, SensorData te
     comfort.soundContribution = calculateSensoryContribution(sound.currentValue, LOW_SOUND_THRESHOLD, HIGH_SOUND_THRESHOLD, sound.trend, sound.spikeDetected);
     comfort.temperatureContribution = calculateSensoryContribution(temperature.currentValue, LOW_TEMPERATURE_THRESHOLD, HIGH_TEMPERATURE_THRESHOLD, temperature.trend, temperature.spikeDetected);
     comfort.overallComfortScore = calculateOverallComfortScore(comfort.lightContribution, comfort.soundContribution, comfort.temperatureContribution);
+    
+    comfort.lightLevel = sensoryComfortLevel(comfort.lightContribution);
+    comfort.soundLevel = sensoryComfortLevel(comfort.soundContribution);
+    comfort.temperatureLevel = sensoryComfortLevel(comfort.temperatureContribution);
+    comfort.overallComfortLevel = sensoryComfortLevel(100.0f - comfort.overallComfortScore);
+    comfort.recommendation = recommendation(comfort.lightLevel, comfort.soundLevel, comfort.temperatureLevel);
 }
