@@ -4,4 +4,5 @@
 #include "comfort_engine.h"
 
 void initDashboard();
-void updateDashboard(SensorData light, SensorData sound, SensorData temperature, ComfortContribution comfort);
+void updateDashboard();
+void handleRoot();

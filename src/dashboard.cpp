@@ -3,7 +3,7 @@
 #include <WiFi.h>
 #include <WebServer.h>
 
-const char* ssid = "Carina's iPhone";
+const char* ssid = "CarinaiPhone";
 const char* password = "u6zr47zj5i0y";
 
 WebServer server(80); 
@@ -24,11 +24,16 @@ void initDashboard() {
     Serial.println("IP address: ");
     Serial.println(WiFi.localIP());
 
+    server.on("/", handleRoot);
+
     server.begin();
     Serial.println("HTTP server started");
 }
 
-void updateDashboard(SensorData light, SensorData sound, SensorData temperature, ComfortContribution comfort) {
-    
+void updateDashboard() {
+    server.handleClient();
+}
 
+void handleRoot() {
+    server.send(200, "text/html", "<html><body><h1>Welcome to the Dashboard</h1></body></html>");
 }
