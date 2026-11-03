@@ -54,6 +54,21 @@ ComfortLevel sensoryComfortLevel(float contribution) {
     }
 }
 
+std::string comfortLevelToString(ComfortLevel level) {
+    switch (level) {
+        case GOOD:
+            return "Good";
+        case MODERATE:
+            return "Moderate";
+        case ELEVATED:
+            return "Elevated";
+        case SEVERE:
+            return "Severe";
+        default:
+            return "Unknown";
+    }
+}
+
 std::string recommendation(ComfortLevel lightLevel, ComfortLevel soundLevel, ComfortLevel temperatureLevel) {
     std::string recommendation = "";
     if ((lightLevel == ELEVATED || lightLevel == SEVERE)) {

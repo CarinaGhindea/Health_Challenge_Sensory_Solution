@@ -1,5 +1,7 @@
 #pragma once 
 
+#include <string>
+
 const int HISTORY_SIZE = 10;
 const int COMPARISON_AVERAGE_WINDOW = 3;
 const int TREND_DECIDER = 2;
@@ -24,8 +26,13 @@ struct SensorData {
     bool spikeDetected;
 };
 
+extern SensorData light;
+extern SensorData sound;
+extern SensorData temperature;
+
 float smoothData(const float history[], int size);
 float calculateComparisonAverage(const float history[], int startIndex);
 Trend getTrend(const float history[], int size, float threshold);
+std::string trendToString(Trend trend);
 bool detectSpike(const float history[], int size, float threshold);
 void updateSensorData();

@@ -32,9 +32,12 @@ struct ComfortContribution {
     std::string recommendation; 
 };
 
+extern ComfortContribution comfort;
+
 float calculateRawSensoryContribution(float currentValue, float lowThreshold, float highThreshold);
 float calculateSensoryContribution(float currentValue, float lowThreshold, float highThreshold, Trend trend, bool spikeDetected);
 float calculateOverallComfortScore(float lightContribution, float soundContribution, float temperatureContribution);
 ComfortLevel sensoryComfortLevel(float contribution);
+std::string comfortLevelToString(ComfortLevel level);
 std::string recommendation(ComfortLevel lightLevel, ComfortLevel soundLevel, ComfortLevel temperatureLevel);
 void updateComfortContribution(SensorData light, SensorData sound, SensorData temperature);

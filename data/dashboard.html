@@ -4,7 +4,7 @@
         <title>Comfort Dashboard</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="icon" href="data:,">
-        <link rel="stylesheet" type="text/css" href="style.css">
+        <link rel="stylesheet" type="text/css" href="dashboard.css">
     </head>
     <body>
         <h1>Comfort Dashboard: </h1>
@@ -19,18 +19,15 @@
         </p>
         <h2>Comfort Breakdown</h2>
         <p> 
-            <span class="comfort-breakdown">Comfort: <br> </span>
-            <span id="comfort-breakdown-text"></span>
-            <span class="comfort-breakdown">Light:<br> </span>
-            <span id="light-breakdown-text"></span>
-            <span class="comfort-breakdown">Sound: <br> </span>
-            <span id="sound-breakdown-text"></span>
-            <span class="comfort-breakdown">Temperature: </span>
-            <span id="temperature-breakdown-text"></span>
+            <span class="comfort-breakdown"><br></span>
+            <span id="comfort-breakdown-text">Comfort: </span>
+            <span id="light-breakdown-text">Light:<br></span>
+            <span id="sound-breakdown-text">Sound: </span>
+            <span id="temperature-breakdown-text">Temperature: </span>
         </p>
         <h2> Light </h2>
         <p>
-            <span class="light-info">Light</span><br>
+            <span class="light-info"></span><br>
             <span id="light-level">Level: </span><br>
             <span id="light-trend">Trend: </span><br>
             <span id="light-spike">Spike: </span>
@@ -38,18 +35,19 @@
         </p>
         <h2> Sound </h2>
         <p>
-            <span class="sound-info">Sound</span><br>
+            <span class="sound-info"></span><br>
             <span id="sound-level">Level: </span><br>
             <span id="sound-trend">Trend: </span><br>
             <span id="sound-spike">Spike: </span>
         </p>
         <h2> Temperature </h2>
         <p>
-            <span class="temperature-info">Temperature</span><br>
+            <span class="temperature-info"></span><br>
             <span id="temperature-current">Current Temperature: </span><br>
             <span id="temperature-level">Level: </span><br>
             <span id="temperature-trend">Trend: </span><br>
             <span id="temperature-spike">Spike: </span>
         </p>
+        <script src="dashboard.js"></script>
     </body>
 </html>

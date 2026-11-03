@@ -5,4 +5,8 @@
 
 void initDashboard();
 void updateDashboard();
+
 void handleRoot();
+void handleCSS();
+void handleJS();
+void handleData();

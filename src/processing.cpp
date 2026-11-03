@@ -46,6 +46,19 @@ Trend getTrend(const float history[], int size, float threshold) {
     }
 }
 
+std::string trendToString(Trend trend) {
+    switch (trend) {
+        case DECREASING:
+            return "Decreasing";
+        case STABLE:
+            return "Stable";
+        case INCREASING:
+            return "Increasing";
+        default:
+            return "Unknown";
+    }
+}
+
 bool detectSpike(const float history[], int size, float threshold) {
     for (int i = 1; i < size - 1; i++) {
         if ((history[i] > history[i + 1] + threshold && 
