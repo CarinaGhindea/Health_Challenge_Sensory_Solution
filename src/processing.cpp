@@ -71,6 +71,26 @@ bool detectSpike(const float history[], int size, float threshold) {
     return false;
 }
 
+std::string spikeDetectedToString(bool spikeDetected) {
+    if (spikeDetected) {
+        return "Spike Detected";
+    } else {
+        return "No Spike Detected";
+    }
+}
+
+void addSensorData(float lightValue, float soundValue, float temperatureValue) {
+    for (int i = 0; i < HISTORY_SIZE - 1; i++) {
+        lightHistory[i] = lightHistory[i + 1];
+        soundHistory[i] = soundHistory[i + 1];
+        temperatureHistory[i] = temperatureHistory[i + 1];
+    }
+    lightHistory[HISTORY_SIZE - 1] = lightValue;
+    soundHistory[HISTORY_SIZE - 1] = soundValue;
+    temperatureHistory[HISTORY_SIZE - 1] = temperatureValue;
+}
+
+
 void updateSensorData() {
     light.currentValue = smoothData(lightHistory, HISTORY_SIZE);
     light.trend = getTrend(lightHistory, HISTORY_SIZE, LIGHT_TREND_THRESHOLD);

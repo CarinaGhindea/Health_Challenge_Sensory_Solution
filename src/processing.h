@@ -35,4 +35,6 @@ float calculateComparisonAverage(const float history[], int startIndex);
 Trend getTrend(const float history[], int size, float threshold);
 std::string trendToString(Trend trend);
 bool detectSpike(const float history[], int size, float threshold);
+std::string spikeDetectedToString(bool spikeDetected);
+void addSensorData(float lightValue, float soundValue, float temperatureValue);
 void updateSensorData();

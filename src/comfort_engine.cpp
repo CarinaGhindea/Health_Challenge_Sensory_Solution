@@ -72,19 +72,19 @@ std::string comfortLevelToString(ComfortLevel level) {
 std::string recommendation(ComfortLevel lightLevel, ComfortLevel soundLevel, ComfortLevel temperatureLevel) {
     std::string recommendation = "";
     if ((lightLevel == ELEVATED || lightLevel == SEVERE)) {
-        recommendation += "Adjust environmental brightness\n";
+        recommendation += "Adjust environmental brightness. ";
     }
     if ((soundLevel == ELEVATED || soundLevel == SEVERE)) {
-        recommendation += "Reduce environmental noise level\n";
+        recommendation += "Reduce environmental noise level. ";
     }
     if ((temperatureLevel == ELEVATED || temperatureLevel == SEVERE)) {
-        recommendation += "Adjust environmental temperature\n";
+        recommendation += "Adjust environmental temperature. ";
     }
     if (recommendation.empty() && (lightLevel == MODERATE || soundLevel == MODERATE || temperatureLevel == MODERATE)) {
-        recommendation += "Monitor environmental conditions\n";
+        recommendation += "Monitor environmental conditions. ";
     }
     if (recommendation.empty()) {
-        recommendation += "Environmental conditions are within acceptable limits\n";
+        recommendation += "Environmental conditions are within acceptable limits. ";
     }
     return recommendation;
 }

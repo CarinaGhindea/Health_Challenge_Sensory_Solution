@@ -1,5 +1,6 @@
 window.onload = function() {
     fetchData();
+    setInterval(fetchData, 1000); 
 }
 
 async function fetchData() {

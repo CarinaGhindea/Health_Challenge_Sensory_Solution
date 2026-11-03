@@ -103,7 +103,7 @@ void handleData() {
     json += trendToString(light.trend).c_str();
     json += "\",";
     json += "\"lightSpike\":\""; 
-    json += String(light.spikeDetected); 
+    json += spikeDetectedToString(light.spikeDetected).c_str(); 
     json += "\",";
     json += "\"soundLevel\":\""; 
     json += comfortLevelToString(comfort.soundLevel).c_str();
@@ -112,7 +112,7 @@ void handleData() {
     json += trendToString(sound.trend).c_str();
     json += "\",";
     json += "\"soundSpike\":\""; 
-    json += String(sound.spikeDetected);
+    json += spikeDetectedToString(sound.spikeDetected).c_str();
     json += "\",";
     json += "\"temperatureCurrent\":"; 
     json += String(temperature.currentValue); 
@@ -124,7 +124,7 @@ void handleData() {
     json += trendToString(temperature.trend).c_str();
     json += "\",";
     json += "\"temperatureSpike\":\""; 
-    json += String(temperature.spikeDetected);
+    json += spikeDetectedToString(temperature.spikeDetected).c_str();
     json += "\"";
     json += "}";
     server.send(200, "application/json",json);
