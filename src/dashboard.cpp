@@ -1,13 +1,17 @@
-#include "dashboard.h"
-#include "comfort_engine.h"
+#include "sensors/light.h"
+#include "sensors/sound.h"
+#include "sensors/temperature.h"
+
 #include "processing.h"
+#include "comfort_engine.h"
+#include "dashboard.h"
 
 #include <WiFi.h>
 #include <WebServer.h>
 #include <LittleFS.h>
 
-const char* ssid = "CarinaiPhone";
-const char* password = "u6zr47zj5i0y";
+const char* ssid = "the wild wild westmount";
+const char* password = "sydeontop";
 
 WebServer server(80); 
 
@@ -93,9 +97,16 @@ void handleData() {
     json += "\"soundBreakdown\":"; 
     json += String(comfort.soundContribution);
     json += ",";
-    json += "\"temperatureBreakdown\":"; 
-    json += String(comfort.temperatureContribution);
-    json += ",";
+
+    if (!temperatureConnected) {
+        json += "\"temperatureBreakdown\":\"Not Connected\",";
+    }
+    else {
+        json += "\"temperatureBreakdown\":";
+        json += String(comfort.temperatureContribution);
+        json += ",";
+    }
+
     json += "\"lightLevel\":\""; 
     json += comfortLevelToString(comfort.lightLevel).c_str();
     json += "\",";
@@ -114,18 +125,28 @@ void handleData() {
     json += "\"soundSpike\":\""; 
     json += spikeDetectedToString(sound.spikeDetected).c_str();
     json += "\",";
-    json += "\"temperatureCurrent\":"; 
-    json += String(temperature.currentValue); 
-    json += ",";
-    json += "\"temperatureLevel\":\""; 
-    json += comfortLevelToString(comfort.temperatureLevel).c_str();
-    json += "\",";
-    json += "\"temperatureTrend\":\""; 
-    json += trendToString(temperature.trend).c_str();
-    json += "\",";
-    json += "\"temperatureSpike\":\""; 
-    json += spikeDetectedToString(temperature.spikeDetected).c_str();
-    json += "\"";
+
+    if (!temperatureConnected) {
+        json += "\"temperatureCurrent\":\"Not Connected\",";
+        json += "\"temperatureLevel\":\"Not Connected\",";
+        json += "\"temperatureTrend\":\"Not Connected\",";
+        json += "\"temperatureSpike\":\"Not Connected\"";
+    }
+    else {
+        json += "\"temperatureCurrent\":"; 
+        json += String(temperature.currentValue); 
+        json += ",";
+        json += "\"temperatureLevel\":\""; 
+        json += comfortLevelToString(comfort.temperatureLevel).c_str();
+        json += "\",";
+        json += "\"temperatureTrend\":\""; 
+        json += trendToString(temperature.trend).c_str();
+        json += "\",";
+        json += "\"temperatureSpike\":\""; 
+        json += spikeDetectedToString(temperature.spikeDetected).c_str();
+        json += "\"";
+    }
+
     json += "}";
     server.send(200, "application/json",json);
 }

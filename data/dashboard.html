@@ -7,47 +7,62 @@
         <link rel="stylesheet" type="text/css" href="dashboard.css">
     </head>
     <body>
-        <h1>Comfort Dashboard: </h1>
-        <p> 
-            <span class="overall-comfort"></span>
+        <div class="overall-comfort">
+            <h1>Comfort Dashboard: </h1>
             <span id="overall-comfort-text"></span>
-        </p>
-        <h2>Recommendation: </h2>
-        <p> 
-            <span class="recommendation"></span>
-            <span id="recommendation-text"></span>
-        </p>
-        <h2>Comfort Breakdown</h2>
-        <p> 
-            <span class="comfort-breakdown"><br></span>
-            <span id="comfort-breakdown-text">Comfort: </span>
-            <span id="light-breakdown-text">Light:<br></span>
-            <span id="sound-breakdown-text">Sound: </span>
-            <span id="temperature-breakdown-text">Temperature: </span>
-        </p>
-        <h2> Light </h2>
-        <p>
-            <span class="light-info"></span><br>
-            <span id="light-level">Level: </span><br>
-            <span id="light-trend">Trend: </span><br>
-            <span id="light-spike">Spike: </span>
+        </div>
 
-        </p>
-        <h2> Sound </h2>
-        <p>
-            <span class="sound-info"></span><br>
-            <span id="sound-level">Level: </span><br>
-            <span id="sound-trend">Trend: </span><br>
-            <span id="sound-spike">Spike: </span>
-        </p>
-        <h2> Temperature </h2>
-        <p>
-            <span class="temperature-info"></span><br>
-            <span id="temperature-current">Current Temperature: </span><br>
-            <span id="temperature-level">Level: </span><br>
-            <span id="temperature-trend">Trend: </span><br>
-            <span id="temperature-spike">Spike: </span>
-        </p>
+        <div class="recommendation">
+            <h2>Recommendation: </h2>
+            <span id="recommendation-text"></span>
+        </div>
+
+        <div class="comfort-breakdown-section">
+            <h2>Comfort Breakdown</h2>
+            <div class="comfort-breakdown-container">
+                <div class="breakdown-card" id="comfort-breakdown-card">
+                    <h3>Comfort</h3>
+                    <span id="comfort-breakdown-text"></span>
+                </div>
+                <div class="breakdown-card" id="light-breakdown-card">
+                    <h3>Light</h3>
+                    <span id="light-breakdown-text"></span>
+                </div>
+                <div class="breakdown-card" id="sound-breakdown-card">
+                    <h3>Sound</h3>
+                    <span id="sound-breakdown-text"></span>
+                </div>
+                <div class="breakdown-card" id="temperature-breakdown-card">
+                    <h3>Temperature</h3>
+                    <span id="temperature-breakdown-text"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="sensor-info-container">
+            <div class="sensor-info-card" id="light-info-card">
+            <h2> Light </h2>
+            <span id="light-level"></span>
+            <span id="light-trend"></span>
+            <span id="light-spike"></span>
+            </div>
+
+            <div class="sensor-info-card" id="sound-info-card">
+            <h2> Sound </h2>
+            <span id="sound-level"></span>
+            <span id="sound-trend"></span>
+            <span id="sound-spike"></span>
+            </div>
+
+            <div class="sensor-info-card" id="temperature-info-card">
+            <h2> Temperature </h2>
+            <span id="temperature-current"></span>
+            <span id="temperature-level"></span>
+            <span id="temperature-trend"></span>
+            <span id="temperature-spike"></span>
+            </div>
+        </div>
+
         <script src="dashboard.js"></script>
     </body>
 </html>

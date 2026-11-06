@@ -2,13 +2,10 @@
 
 #include <Arduino.h>
 
+extern bool temperatureConnected; 
+
 void initTemperature();
 
 float readTemperature();
 
-enum TemperatureStatus {
-    TEMPERATURE_OK,
-    TEMPERATURE_INVALID
-};
-
-TemperatureStatus checkTemperature(float temperatureValue); 
+bool checkTemperature(float temperatureValue); 

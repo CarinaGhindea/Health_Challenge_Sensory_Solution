@@ -1,3 +1,4 @@
+#include "sensors/temperature.h"
 #include "comfort_engine.h"
 #include <math.h>
 
@@ -35,7 +36,13 @@ float calculateSensoryContribution(float currentValue, float lowThreshold, float
 }
 
 float calculateOverallComfortScore(float lightContribution, float soundContribution, float temperatureContribution) {
-    float overallComfortScore = 100.0f - lightContribution - soundContribution - temperatureContribution;
+    float overallComfortScore = 100.0f;
+    if (!temperatureConnected) {
+        overallComfortScore -= (lightContribution + soundContribution); 
+    }
+    else {
+        overallComfortScore -= (lightContribution + soundContribution + temperatureContribution);
+    }
     if (overallComfortScore < 0.0f) {
         overallComfortScore = 0.0f; 
     }
@@ -48,7 +55,7 @@ ComfortLevel sensoryComfortLevel(float contribution) {
     } else if (contribution < 10.0f) {
         return MODERATE;
     } else if (contribution < 25.0f) {
-        return ELEVATED;
+        return POOR;
     } else {
         return SEVERE;
     }
@@ -60,8 +67,8 @@ std::string comfortLevelToString(ComfortLevel level) {
             return "Good";
         case MODERATE:
             return "Moderate";
-        case ELEVATED:
-            return "Elevated";
+        case POOR:
+            return "Poor";
         case SEVERE:
             return "Severe";
         default:
@@ -71,13 +78,13 @@ std::string comfortLevelToString(ComfortLevel level) {
 
 std::string recommendation(ComfortLevel lightLevel, ComfortLevel soundLevel, ComfortLevel temperatureLevel) {
     std::string recommendation = "";
-    if ((lightLevel == ELEVATED || lightLevel == SEVERE)) {
+    if ((lightLevel == POOR || lightLevel == SEVERE)) {
         recommendation += "Adjust environmental brightness. ";
     }
-    if ((soundLevel == ELEVATED || soundLevel == SEVERE)) {
+    if ((soundLevel == POOR || soundLevel == SEVERE)) {
         recommendation += "Reduce environmental noise level. ";
     }
-    if ((temperatureLevel == ELEVATED || temperatureLevel == SEVERE)) {
+    if ((temperatureLevel == POOR || temperatureLevel == SEVERE)) {
         recommendation += "Adjust environmental temperature. ";
     }
     if (recommendation.empty() && (lightLevel == MODERATE || soundLevel == MODERATE || temperatureLevel == MODERATE)) {

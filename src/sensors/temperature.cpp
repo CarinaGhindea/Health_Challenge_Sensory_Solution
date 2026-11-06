@@ -5,6 +5,7 @@ const int TEMPERATURE_PIN = A2; // Define the pin for the temperature sensor - p
 const int B = 4250;            // B value of the thermistor in Kelvin 
 const int R0 = 100000;            // R0 = 100k
 
+bool temperatureConnected = true;
 
 void initTemperature() {
     pinMode(TEMPERATURE_PIN, INPUT); // Set the temperature sensor pin as input
@@ -17,11 +18,7 @@ float readTemperature() {
     return temperatureValue;
 }
 
-TemperatureStatus checkTemperature(float temperatureValue) {
-    if (temperatureValue < -36 || temperatureValue > 40) {
-        return TEMPERATURE_INVALID; // Return invalid status if temperature is out of range sensor could be faulty or disconnected
-    }
-    else {
-        return TEMPERATURE_OK; // Return OK status if temperature is within the valid range
-    }
+bool checkTemperature(float temperatureValue) {
+    temperatureConnected = (temperatureValue > -25 && temperatureValue < 40);
+    return temperatureConnected; 
 }

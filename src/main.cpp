@@ -13,9 +13,10 @@
 void setup()
 {
     Serial.begin(115200);
-    if(!LittleFS.begin(true)){
-    Serial.println("An Error has occurred while mounting LittleFS");
-    return;
+    
+    if(!LittleFS.begin(true)) {
+        Serial.println("An Error has occurred while mounting LittleFS");
+        return;
     }
 
     initLight(); 
@@ -30,7 +31,15 @@ void loop()
     float lightValue = readLight();
     float soundValue = readSound();
     float temperatureValue = readTemperature();
+
+    bool temperatureConnected = checkTemperature(temperatureValue);
+    if (checkTemperature(temperatureValue)) {
     addSensorData(lightValue, soundValue, temperatureValue);
+    }
+    else {
+    addSensorData(lightValue, soundValue, temperature.currentValue);
+    }
+
     updateSensorData();
     updateComfortContribution(light, sound, temperature);
     updateDashboard();

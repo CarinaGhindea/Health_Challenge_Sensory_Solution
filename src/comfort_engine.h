@@ -14,7 +14,7 @@ const float HIGH_TEMPERATURE_THRESHOLD = 24.0f;
 enum ComfortLevel {
     GOOD, 
     MODERATE,
-    ELEVATED,
+    POOR,
     SEVERE
 };
 
