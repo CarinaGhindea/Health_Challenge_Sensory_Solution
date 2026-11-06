@@ -10,8 +10,8 @@
 #include <WebServer.h>
 #include <LittleFS.h>
 
-const char* ssid = "the wild wild westmount";
-const char* password = "sydeontop";
+const char* ssid = "YOUR_WIFI_NAME";
+const char* password = "YOUR_WIFI_PASSWORD";
 
 WebServer server(80); 
 

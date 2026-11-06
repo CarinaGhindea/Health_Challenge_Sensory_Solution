@@ -22,6 +22,7 @@ async function fetchData() {
         
         if (data.temperatureBreakdown === "Not Connected") {
             document.getElementById("temperature-breakdown-text").innerHTML = "Not Connected";
+            updateComfortLevelColourFromPercentage("temperature-breakdown-card", data.temperatureBreakdown);
         }
         else {
             document.getElementById("temperature-breakdown-text").innerHTML = data.temperatureBreakdown + "%";
@@ -40,6 +41,7 @@ async function fetchData() {
 
         if (data.temperatureCurrent === "Not Connected") {
             document.getElementById("temperature-current").innerHTML = "Current Temperature: Not Connected";
+            updateComfortLevelColourFromLevel("temperature-info-card", data.temperatureLevel);
         }
         else {
         document.getElementById("temperature-current").innerHTML = "Current Temperature: " + data.temperatureCurrent + "°C";
@@ -58,7 +60,7 @@ async function fetchData() {
 
 function updateComfortLevelColourFromLevel(elementId, level) {
     const comfortElement = document.getElementById(elementId);
-    comfortElement.classList.remove("good", "moderate", "poor", "severe");
+    comfortElement.classList.remove("good", "moderate", "poor", "severe", "temperature-not-connected");
 
     if (level === "Good") {
         comfortElement.classList.add("good");
@@ -68,13 +70,15 @@ function updateComfortLevelColourFromLevel(elementId, level) {
         comfortElement.classList.add("poor");
     } else if (level === "Severe") {
         comfortElement.classList.add("severe");
+    } else {
+        comfortElement.classList.add("temperature-not-connected")
     }
     
 }
 
 function updateComfortLevelColourFromPercentage(elementId, percentage) {
     const comfortElement = document.getElementById(elementId);
-    comfortElement.classList.remove("good", "moderate", "poor", "severe");
+    comfortElement.classList.remove("good", "moderate", "poor", "severe", "temperature-not-connected");
 
     if (percentage < 5.0) {
         comfortElement.classList.add("good");
@@ -82,8 +86,10 @@ function updateComfortLevelColourFromPercentage(elementId, percentage) {
         comfortElement.classList.add("moderate");
     } else if (percentage < 25.0) {
         comfortElement.classList.add("poor");
-    } else {
+    } else if (percentage > 25.0) {
         comfortElement.classList.add("severe");
+    } else {
+        comfortElement.classList.add("temperature-not-connected")
     }
 }
 

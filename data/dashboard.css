@@ -135,10 +135,29 @@ body {
   color: rgb(131, 6, 6); 
 }
 
-@media (max-width: 1200px) {
+.temperature-not-connected {
+  color: #202020; 
+  border: 3px solid #202020;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.mobile-label {
+  display: none;
+}
+
+@media (max-width: 768px) {
   body {
     padding: 0.5em;
     margin: 0.5em;
+  }
+  .desktop-label {
+    display: none;
+  }
+  .mobile-label {
+    display: inline;
   }
   .overall-comfort, 
   .recommendation {
@@ -146,11 +165,22 @@ body {
     text-align: center;
     margin: 5px;
   }
+  .comfort-breakdown-section {
+    margin: 5px;
+    padding: 10px;
+    box-sizing: border-box;
+    width: 100%;
+    overflow: hidden; 
+  }
   .comfort-breakdown-container {
     grid-template-columns: repeat(2, 1fr);
+    width: 100%;
   }
   .breakdown-card {
-  gap: 2px;
+    gap: 2px;
+    margin: 0;
+    min-width: 0;
+    padding: 10px; 
   }
   .sensor-info-container {
     grid-template-columns: 1fr;
