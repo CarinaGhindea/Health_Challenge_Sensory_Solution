@@ -10,9 +10,13 @@
 #include <WebServer.h>
 #include <LittleFS.h>
 
-const char* ssid = "YOUR_WIFI_NAME";
+// replace WiFi name and password to network where ESP32 will be connected 
+// device displaying dashboard also needs to be connected to that WiFi
+// would recommend using hotspot as eduroam cannot be used like this 
+const char* ssid = "YOUR_WIFI_NAME"; 
 const char* password = "YOUR_WIFI_PASSWORD";
 
+// creates WebServer object on port 80
 WebServer server(80); 
 
 void initDashboard() {
@@ -29,58 +33,70 @@ void initDashboard() {
     Serial.println("");
     Serial.println("WiFi connected.");
     Serial.println("IP address: ");
-    Serial.println(WiFi.localIP());
+    Serial.println(WiFi.localIP()); // IP which can be used to access dashboard 
 
-    server.on("/", handleRoot);
-    server.on("/dashboard.css", handleCSS);
-    server.on("/dashboard.js", handleJS);
-    server.on("/data", handleData);
+    // associates URLs with functions that return their content 
+    server.on("/", handleRoot); 
+    server.on("/dashboard.css", handleCSS); 
+    server.on("/dashboard.js", handleJS); 
+    server.on("/data", handleData); 
 
-    server.begin();
+    // starts server 
+    server.begin(); 
     Serial.println("HTTP server started");
 }
 
 void updateDashboard() {
+    // checks for incoming broswer requests 
+    // and calls corresponding route handler function 
     server.handleClient();
 }
 
 void handleRoot() {
-    File file = LittleFS.open("/dashboard.html");
-    if(!file){
-    Serial.println("Failed to open file for reading");
-    return;
+    File file = LittleFS.open("/dashboard.html"); // opens HTML file 
+    if(!file) {
+        Serial.println("Failed to open file for reading");
+        return;
     }
 
+    // sends files content from LittleFS to browser
     server.streamFile(file, "text/html"); 
 
     file.close();
 }
 
 void handleCSS() {
-    File file = LittleFS.open("/dashboard.css");
-    if(!file){
-    Serial.println("Failed to open file for reading");
-    return;
+    File file = LittleFS.open("/dashboard.css"); // opens CSS file 
+    if(!file) {
+        Serial.println("Failed to open file for reading");
+        return;
     }
 
+    // sends files content from LittleFS to browser
     server.streamFile(file, "text/css"); 
 
     file.close();
 }
 
 void handleJS() {
-    File file = LittleFS.open("/dashboard.js");
-    if(!file){
-    Serial.println("Failed to open file for reading");
-    return;
+    File file = LittleFS.open("/dashboard.js"); // opens JS file
+    if(!file) {
+        Serial.println("Failed to open file for reading");
+        return;
     }
 
+    // sends files content from LittleFS to browser
     server.streamFile(file, "text/javascript"); 
 
     file.close();
 }
 
+// Dashboard.js requests this information every second using fetch('/data')
+// creating JSON string which holds dashboard information 
 void handleData() {
+    // ToString functions convert enums to strings so they can be appended 
+    // .c_str() returns C-style string equivalent so it can be appended 
+    // String(...) converts number to JSON string 
     String json = "{";
     json += "\"overallComfort\":\""; 
     json += comfortLevelToString(comfort.overallComfortLevel).c_str();
@@ -98,6 +114,8 @@ void handleData() {
     json += String(comfort.soundContribution);
     json += ",";
 
+    // if temperature is not connected displays "Not Connected"
+    // rather than inaccurate value 
     if (!temperatureConnected) {
         json += "\"temperatureBreakdown\":\"Not Connected\",";
     }
@@ -126,6 +144,8 @@ void handleData() {
     json += spikeDetectedToString(sound.spikeDetected).c_str();
     json += "\",";
 
+    // if temperature is not connected displays "Not Connected"
+    // rather than inaccurate value 
     if (!temperatureConnected) {
         json += "\"temperatureCurrent\":\"Not Connected\",";
         json += "\"temperatureLevel\":\"Not Connected\",";
@@ -148,5 +168,5 @@ void handleData() {
     }
 
     json += "}";
-    server.send(200, "application/json",json);
+    server.send(200, "application/json",json); // sends information to browser 
 }

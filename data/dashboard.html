@@ -4,19 +4,23 @@
         <title>Comfort Dashboard</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="icon" href="data:,">
+        <!-- linking CSS styling to content -->
         <link rel="stylesheet" type="text/css" href="dashboard.css">
     </head>
     <body>
+        <!-- overall header displaying overall comfort level-->
         <div class="overall-comfort">
             <h1>Comfort Dashboard: </h1>
             <span id="overall-comfort-text"></span>
         </div>
 
+        <!-- recommendation(s) displaying suggested actions -->
         <div class="recommendation">
             <h2>Recommendation: </h2>
             <span id="recommendation-text"></span>
         </div>
 
+        <!-- creating comfort breakdown cards shwoing overall and per-sensor contributtions -->
         <div class="comfort-breakdown-section">
             <h2>Comfort Breakdown</h2>
             <div class="comfort-breakdown-container">
@@ -34,6 +38,7 @@
                 </div>
                 <div class="breakdown-card" id="temperature-breakdown-card">
                     <h3>
+                    <!-- creating two temperature labels as "temperature" runs off page in mobile version -->
                     <span class="desktop-label">Temperature</span>
                     <span class="mobile-label">Temp</span>
                     </h3>
@@ -42,6 +47,8 @@
             </div>
         </div>
 
+        <!-- creating individual sensor cards with levels, trends, and spike detections 
+            as well as current value for temperature card -->
         <div class="sensor-info-container">
             <div class="sensor-info-card" id="light-info-card">
             <h2> Light </h2>
@@ -66,6 +73,7 @@
             </div>
         </div>
 
+        <!--  connecting JS file used to retrieve and update live data -->
         <script src="dashboard.js"></script>
     </body>
 </html>

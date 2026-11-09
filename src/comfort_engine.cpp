@@ -4,6 +4,7 @@
 
 ComfortContribution comfort;
 
+// calculating discomfort percentage contribution of sensor being outside of its acceptable comfort range
 float calculateRawSensoryContribution(float currentValue, float lowThreshold, float highThreshold) {
     float rawContribution = 0.0f;
     float middleThreshold = (lowThreshold + highThreshold) / 2.0f;
@@ -16,8 +17,10 @@ float calculateRawSensoryContribution(float currentValue, float lowThreshold, fl
     return rawContribution;
 }
 
+// applying trend and spike calculations to better reflect changing environmental conditions  
 float calculateSensoryContribution(float currentValue, float lowThreshold, float highThreshold, Trend trend, bool spikeDetected) {
     float sensoryContribution = 0; 
+    // if value is moving in direction of trend and is not within thresholds trend lowers overall comfort 
     if (currentValue < lowThreshold) {
         sensoryContribution = calculateRawSensoryContribution(currentValue, lowThreshold, highThreshold);
         if (trend == DECREASING) {
@@ -29,26 +32,31 @@ float calculateSensoryContribution(float currentValue, float lowThreshold, float
             sensoryContribution += 5;
          }
     }
+    // decreasing comfort when spike is detected to make spike noticable 
     if (spikeDetected) {
         sensoryContribution += 5; 
     }
     return sensoryContribution;
 }
 
+// calculating overall comfort score to give numerical comfort overview 
 float calculateOverallComfortScore(float lightContribution, float soundContribution, float temperatureContribution) {
     float overallComfortScore = 100.0f;
+    // if the temperature sensor is not connected then only light and sound are considered 
     if (!temperatureConnected) {
         overallComfortScore -= (lightContribution + soundContribution); 
     }
     else {
         overallComfortScore -= (lightContribution + soundContribution + temperatureContribution);
     }
+    // keeping comfort within logical limits 
     if (overallComfortScore < 0.0f) {
         overallComfortScore = 0.0f; 
     }
     return overallComfortScore;
 }
 
+// assigning comfort level depending on sensory contribution 
 ComfortLevel sensoryComfortLevel(float contribution) {
     if (contribution < 5.0f) {
         return GOOD;
@@ -61,6 +69,7 @@ ComfortLevel sensoryComfortLevel(float contribution) {
     }
 }
 
+// turns enums into strings so they can be displayed on the dashboard 
 std::string comfortLevelToString(ComfortLevel level) {
     switch (level) {
         case GOOD:
@@ -76,6 +85,7 @@ std::string comfortLevelToString(ComfortLevel level) {
     }
 }
 
+// returns user recommendations depending on comfort levels
 std::string recommendation(ComfortLevel lightLevel, ComfortLevel soundLevel, ComfortLevel temperatureLevel) {
     std::string recommendation = "";
     if ((lightLevel == POOR || lightLevel == SEVERE)) {
@@ -96,6 +106,7 @@ std::string recommendation(ComfortLevel lightLevel, ComfortLevel soundLevel, Com
     return recommendation;
 }
 
+//  recalculate comfort percentages, levels, and dashboard recommendations using latest processed sensor data
 void updateComfortContribution(SensorData light, SensorData sound, SensorData temperature) {
     comfort.lightContribution = calculateSensoryContribution(light.currentValue, LOW_LIGHT_THRESHOLD, HIGH_LIGHT_THRESHOLD, light.trend, light.spikeDetected);
     comfort.soundContribution = calculateSensoryContribution(sound.currentValue, LOW_SOUND_THRESHOLD, HIGH_SOUND_THRESHOLD, sound.trend, sound.spikeDetected);

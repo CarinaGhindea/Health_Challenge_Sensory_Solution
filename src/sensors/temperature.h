@@ -2,7 +2,7 @@
 
 #include <Arduino.h>
 
-extern bool temperatureConnected; 
+extern bool temperatureConnected; // used as a flag for temperature validation 
 
 void initTemperature();
 

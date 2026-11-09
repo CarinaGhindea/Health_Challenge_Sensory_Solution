@@ -99,6 +99,7 @@ body {
   font-size: 1.75rem;
 }
 
+/* colour indicators which change based on values  */
 .good {
   color: rgb(27, 131, 6); 
   border: 3px solid rgb(27, 131, 6);
@@ -135,19 +136,23 @@ body {
   color: rgb(131, 6, 6); 
 }
 
+/* visual display to indicate that temperature sensor is not connected */
 .temperature-not-connected {
   color: #202020; 
   border: 3px solid #202020;
 }
 
+/* includes padding and border inside specified width to prevent layout overflow on smaller screens */
 * {
   box-sizing: border-box;
 }
 
+/* displays "temperature" in laptop version*/
 .mobile-label {
   display: none;
 }
 
+/* mobile layout adjustments */
 @media (max-width: 768px) {
   body {
     padding: 0.5em;
@@ -156,6 +161,7 @@ body {
   .desktop-label {
     display: none;
   }
+  /* displays "temp" instead of "temperature"*/
   .mobile-label {
     display: inline;
   }
@@ -172,6 +178,7 @@ body {
     width: 100%;
     overflow: hidden; 
   }
+  /* creates a 2x2 grid for contribution boxes */
   .comfort-breakdown-container {
     grid-template-columns: repeat(2, 1fr);
     width: 100%;
@@ -182,6 +189,7 @@ body {
     min-width: 0;
     padding: 10px; 
   }
+  /* creates 3x1 grid to display temperature cards */
   .sensor-info-container {
     grid-template-columns: 1fr;
   }

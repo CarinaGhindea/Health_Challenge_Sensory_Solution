@@ -1,13 +1,16 @@
 window.onload = function() {
     fetchData();
-    setInterval(fetchData, 1000); 
+    setInterval(fetchData, 1000); // refreshes dashboard with new data every second 
 }
 
 async function fetchData() {
     try {
-        const response = await fetch('/data');
-        const data = await response.json();
+        const response = await fetch('/data'); // requests latest dashboard data from ESP32
+        const data = await response.json(); // converts JSON response into JS object
 
+        // .innerHTML sets the data to be displayed in the place of the HTML ID
+        // functions ComfortLevelColour(...) update the colour of the text and/or 
+        // card to reflect level or percentage to add a visual cue 
         document.getElementById("overall-comfort-text").innerHTML = data.overallComfort;
         updateOverallComfortLevelColourFromLevel(data.overallComfort);
         document.getElementById("recommendation-text").innerHTML = data.recommendation;
@@ -20,6 +23,8 @@ async function fetchData() {
         document.getElementById("sound-breakdown-text").innerHTML = data.soundBreakdown + "%";
         updateComfortLevelColourFromPercentage("sound-breakdown-card", data.soundBreakdown);
         
+        // displays "Not Connected" in place of inaccurate values when temperature sensor is not connected 
+        // also updates colour of text and card for further visual aid 
         if (data.temperatureBreakdown === "Not Connected") {
             document.getElementById("temperature-breakdown-text").innerHTML = "Not Connected";
             updateComfortLevelColourFromPercentage("temperature-breakdown-card", data.temperatureBreakdown);
@@ -39,6 +44,8 @@ async function fetchData() {
         document.getElementById("sound-spike").innerHTML = "Spike: " + data.soundSpike;
         updateComfortLevelColourFromLevel("sound-info-card", data.soundLevel);
 
+        // displays "Not Connected" in place of inaccurate values when temperature sensor is not connected 
+        // also updates colour of text and card for further visual aid 
         if (data.temperatureCurrent === "Not Connected") {
             document.getElementById("temperature-current").innerHTML = "Current Temperature: Not Connected";
             updateComfortLevelColourFromLevel("temperature-info-card", data.temperatureLevel);
@@ -58,6 +65,7 @@ async function fetchData() {
     }
 }
 
+// corresponds with colours in CSS file and adds that colour to the card depending on level 
 function updateComfortLevelColourFromLevel(elementId, level) {
     const comfortElement = document.getElementById(elementId);
     comfortElement.classList.remove("good", "moderate", "poor", "severe", "temperature-not-connected");
@@ -76,6 +84,7 @@ function updateComfortLevelColourFromLevel(elementId, level) {
     
 }
 
+// corresponds with colours in CSS file and adds that colour to the card depending on percentage
 function updateComfortLevelColourFromPercentage(elementId, percentage) {
     const comfortElement = document.getElementById(elementId);
     comfortElement.classList.remove("good", "moderate", "poor", "severe", "temperature-not-connected");
@@ -93,6 +102,7 @@ function updateComfortLevelColourFromPercentage(elementId, percentage) {
     }
 }
 
+// corresponds with colours in CSS file and adds that colour to the overall comfort text depending on level 
 function updateOverallComfortLevelColourFromLevel(level) {
     const comfortElement = document.getElementById("overall-comfort-text");
     comfortElement.classList.remove("good-text", "moderate-text", "poor-text", "severe-text");
@@ -108,6 +118,7 @@ function updateOverallComfortLevelColourFromLevel(level) {
     }
 }
 
+// corresponds with colours in CSS file and adds that colour to the overall comfort text depending on percentage 
 function updateOverallComfortLevelColourFromPercentage(percentage) {
     const comfortElement = document.getElementById("comfort-breakdown-card");
     comfortElement.classList.remove("good", "moderate", "poor", "severe");
