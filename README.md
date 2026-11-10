@@ -75,7 +75,8 @@ Data is continuously collected from light, sound, and temperature sensors connec
 #### Mobile Dashboard 
 ![Dashboard Mobile Screenshot](images/dashboard_mobile.png)
 
-[Mobile Dashboard Screen Recording](media/dashboard_mobile_screen_recording.MP4)
+#### [Mobile Dashboard Screen Recording](media/dashboard_mobile_screen_recording.MP4) 
+If the video does not play directly in GitHub, select "View Raw" to open the video file.
 
 #### Full Solution
 ![Full Setup](images/full_setup.png)
