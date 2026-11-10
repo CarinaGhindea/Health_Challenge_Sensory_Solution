@@ -96,13 +96,13 @@ Microsoft Copilot was used to assist with debugging, documentation feedback, and
 ### Sensors
 - **Grove Light Sensor:** https://wiki.seeedstudio.com/Grove-Light_Sensor/
 
-- **Grove Light Sensor:**https://www.hackster.io/ingo-lohs/grove-introduction-in-a-light-sensor-a55efd 
+- **Grove Light Sensor:** https://www.hackster.io/ingo-lohs/grove-introduction-in-a-light-sensor-a55efd 
 
-- **Grove Sound Sensor:**https://wiki.seeedstudio.com/Grove-Sound_Sensor/
+- **Grove Sound Sensor:** https://wiki.seeedstudio.com/Grove-Sound_Sensor/
 
-- **Grove Temperature Sensor:**https://wiki.seeedstudio.com/Grove-Temperature_Sensor_V1.2/
+- **Grove Temperature Sensor:** https://wiki.seeedstudio.com/Grove-Temperature_Sensor_V1.2/
 
-- **Grove Temperature Sensor Datasheet:**https://www.berrybase.de/en/product-datasheet/019234a46c1b7364bfdac53da78c407c/create?srsltid=AYCX9vKbi2MFV9sZ_Fe6tFQbCHUPTxSl9p8s2eyOSe_w5k3Rx5OC1KhK 
+- **Grove Temperature Sensor Datasheet:** https://www.berrybase.de/en/product-datasheet/019234a46c1b7364bfdac53da78c407c/create?srsltid=AYCX9vKbi2MFV9sZ_Fe6tFQbCHUPTxSl9p8s2eyOSe_w5k3Rx5OC1KhK 
 
 ### ESP32 Web Server Development 
 - [Building an ESP32 Web Server: The Complete Guide for Beginners | Random Nerd Tutorials](https://randomnerdtutorials.com/esp32-web-server-beginners-guide/)
