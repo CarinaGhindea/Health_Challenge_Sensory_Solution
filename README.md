@@ -24,23 +24,23 @@ This solution addresses the Sensory subproblem (4.3 Recognizing and Responding t
 ## System Diagram 
 ![System Diagram](images/system_diagram.svg)
 
-Data is continously collected from light, sound, and temperature sensors connected to an ESP32. The sensor readings are processed to determine comfort score, level, trend, and spikes before they are sent through the ESP32 web server and displayed on a real-time dashboard accessible over WiFi. 
+Data is continuously collected from light, sound, and temperature sensors connected to an ESP32. The sensor readings are processed to determine comfort score, level, trend, and spikes before they are sent through the ESP32 web server and displayed on a real-time dashboard accessible over WiFi. 
 
 ## Features 
 ### Sensor Processing 
-- Real-time enviornmental monitoring using light, sound, and temperature sensors 
+- Real-time environmental monitoring using light, sound, and temperature sensors 
 - Temperature sensor value validation and disconnection visual alert 
 - Sensor data smoothing with moving values 
 - Trend detection with comparing moving averages (Increasing, Stable, Decreasing)
-- Spike detection for sudden environemntal changes
+- Spike detection for sudden environmental changes
 
 ### Comfort Assessment 
-- Overall and invdividual comfort score calculation and level classification
+- Overall and individual comfort score calculation and level classification
 - Environment adjustment recommendation 
 
 ### Dashboard 
 - Real-time ESP32 web dashboard
-- Adpative dashboard layout for desktop and mobile devices 
+- Adaptive dashboard layout for desktop and mobile devices 
 - WiFi access from any device on the same network
 
 ## Design Decisions 
@@ -56,20 +56,69 @@ Data is continously collected from light, sound, and temperature sensors connect
 - An adaptive dashboard layout was implemented to allow monitoring from both desktop and mobile devices. 
 
 ## Setup
+1. Wire sensors to corresponding ESP32 pins and plug in ESP32 to laptop via USB-C cable. 
+2. In `dashboard.cpp`, replace `YOUR_WIFI_NAME` and `YOUR_WIFI_PASSWORD` with the SSID and password of the WiFi network the ESP32 will connect to.
+3. Ensure device displaying the dashboard is connected to same network as the ESP32. 
+4. Under PlatformIO, upload the LittleFS filesystem image. 
+5. Upload the project to the ESP32. 
+6. Open the Serial Monitor to note what the IP address is. 
+7. Paste the IP address into the browser of your device that is displaying the dashboard. 
+8. The dashboard should now be running. 
 
-## Screenshots 
+## Screenshots and Images
+#### Desktop Dashboard
+![Dashboard Desktop Screenshot](images/dashboard_desktop.png)
 
-## Future Improvments
+#### Desktop Dashboard when Temperature Sensor is Not Connected 
+![Dashboard Desktop Temperature Sensor Not Connected](images/dashboard_sensor_not_connected.png)
+
+#### Mobile Dashboard 
+![Dashboard Mobile Screenshot](images/dashboard_mobile.png)
+
+[Mobile Dashboard Screen Recording](media/dashboard_mobile_screen_recording.MP4)
+
+#### Full Solution
+![Full Setup](images/full_setup.png)
+
+#### Sensor Hardware 
+![Hardware](images/hardware_sensors.png)
+
+## Future Improvements
+- Allow customizable thresholds so the system could be more personalized to the sensitivities of each elderly person. 
+- Make trend percentage contribution depend on the amount of time the trend is moving in a uncomfortable direction. 
+- Make spike percentage contribution depend on if the spike moves in a comfortable or uncomfortable" direction as well as the size of the spike. 
+- Physical enclosure for the hardware (eg. 3D printed case, PCB integrating all the sensors). 
+- Implement a capping method for the percentages to prevent impossible percentages. 
+- Replace Grove sensors with higher accuracy light and sound sensors. 
 
 ## References
-### Light Sensor
-https://wiki.seeedstudio.com/Grove-Light_Sensor/
-https://www.hackster.io/ingo-lohs/grove-introduction-in-a-light-sensor-a55efd 
+Microsoft Copilot was used to assist with debugging, documentation feedback, and frontend development questions.
+### Sensors
+- **Grove Light Sensor:** https://wiki.seeedstudio.com/Grove-Light_Sensor/
 
-### Sound Sensor
-https://wiki.seeedstudio.com/Grove-Sound_Sensor/
+- **Grove Light Sensor:**https://www.hackster.io/ingo-lohs/grove-introduction-in-a-light-sensor-a55efd 
 
-### Temperature Sensor
-https://wiki.seeedstudio.com/Grove-Temperature_Sensor_V1.2/
+- **Grove Sound Sensor:**https://wiki.seeedstudio.com/Grove-Sound_Sensor/
 
-These links is from where I pulled test code to test all of the sensors. 
+- **Grove Temperature Sensor:**https://wiki.seeedstudio.com/Grove-Temperature_Sensor_V1.2/
+
+- **Grove Temperature Sensor Datasheet:**https://www.berrybase.de/en/product-datasheet/019234a46c1b7364bfdac53da78c407c/create?srsltid=AYCX9vKbi2MFV9sZ_Fe6tFQbCHUPTxSl9p8s2eyOSe_w5k3Rx5OC1KhK 
+
+### ESP32 Web Server Development 
+- [Building an ESP32 Web Server: The Complete Guide for Beginners | Random Nerd Tutorials](https://randomnerdtutorials.com/esp32-web-server-beginners-guide/)
+- [ESP32 Web Server using LittleFS Filesystem | Random Nerd Tutorials](https://randomnerdtutorials.com/esp32-web-server-littlefs/)
+- [ESP32 VS Code PlatformIO: Upload Files to LittleFS Filesystem | Random Nerd Tutorials](https://randomnerdtutorials.com/esp32-vs-code-platformio-littlefs/)
+- [ESP32 LittleFS Tutorial: File Storage, Read/Write & Web Server with Arduino IDE](https://www.sunfounder.com/blogs/news/esp32-littlefs-tutorial-file-storage-read-write-web-server-with-arduino-ide?srsltid=AYCX9vK2LbkLpkK1ZWRkeaHvsuKjvVzuStqw1qiqPCh4F5_P0fU3DPNK)
+- [DIYables ESP32 Web Server Json Example | ESP32 Tutorial](https://esp32io.com/tutorials/diyables-esp32-web-server-json-example)
+- [ESP32 WebServer.h Example — Arduino Web Server in 30 Lines](https://blog.hirnschall.net/esp32-webserver/)
+
+### Dashboard Frontend Development 
+- [HTML DOM Element innerHTML Property](https://www.w3schools.com/jsref/prop_html_innerhtml.asp)
+- [Learn Changing the Contents of HTML Elements | DOM and HTML Manipulation](https://codefinity.com/courses/v2/b9808bef-5849-468d-b10d-532a2e0a015f/2a6c55b7-8d6e-434b-9304-1705c697dbc5/2828a78c-de46-4659-938b-4798b7c5e2ed) 
+- [JavaScript · Bootstrap](https://getbootstrap.com/docs/3.4/javascript/)
+- [Window setInterval() Method](https://www.w3schools.com/jsref/met_win_setinterval.asp)
+- [15 CSS Card Grid Layouts — Free Live Demos | CodeFronts](https://codefronts.com/layouts/css-card-grid-layout/)
+- [Learn CSS Basics by Building a Card Component](https://www.freecodecamp.org/news/learn-css-basics-by-building-a-card-component/) 
+- [CSS Stratified Bento Grid Layout — Free CSS Code & Live Demo | CodeFronts](https://codefronts.com/layouts/css-card-grid-layout/css-stratified-bento-grid-layout/)
+- https://developer.mozilla.org/en-US/docs/Web/CSS/How_to/Layout_cookbook/Card
+- [Responsive Web Design Media Queries](https://www.w3schools.com/css/css_rwd_mediaqueries.asp)
